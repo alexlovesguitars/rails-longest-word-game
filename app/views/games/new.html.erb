@@ -1,0 +1,46 @@
+<%# Create a container for all elements %>
+<div class="container d-flex justify-content-center flex-column">
+
+  <%# Header for the page... %>
+  <h1 class="header d-flex justify-content-center">New Game</h1>
+
+  <%# New div containing erb for the iteration of my array %>
+  <div class="d-flex justify-content-center">
+    <% @letters.each do |letter| %>
+      <span><%= letter %></span>
+    <% end %>
+  </div>
+
+  <%# Asking the user for the longest word %>
+  <p class="d-flex justify-content-center">What's the longest word you can find?</p>
+
+  <%# Adding form for posting their guess for checking the API %>
+  <form action="/score" method="post" data-turbo="false" id="game-form">
+
+    <%# This hidden tag is a security method of rails to ensure the request is coming from withing the page %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <div class="form-group d-flex justify-content-center">
+
+      <%# name="" needs to be added for the params to have a key that the user input can be assigned to %>
+      <input type="text" name="guess" class="form-control w-50" placeholder="Enter your guess...">
+
+      <%# Hidden Tag for adding time parameter to submission%>
+      <input type="hidden" name="time" id="time-input">
+    </div>
+    <div class="d-flex justify-content-center">
+      <button type="submit" class="btn btn-primary">Play!</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  // Capture the start time when the page loads
+  const startTime = new Date().getTime();
+
+  document.getElementById('game-form').onsubmit = function() {
+    // Calculate the elapsed time in seconds before submitting
+    const currentTime = new Date().getTime();
+    const elapsedTime = Math.round((currentTime - startTime) / 1000); // Convert to seconds
+    document.getElementById('time-input').value = elapsedTime; // Set the hidden input value
+  };
+</script>

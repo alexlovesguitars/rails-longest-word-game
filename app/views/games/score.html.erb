@@ -1,0 +1,9 @@
+<div class="container d-flex jusitfy-content-center flex-column align-items-center">
+  <h1 class="header d-flex justify-content-center mb-5">Your Score</h1>
+
+  <p>Your Guess: <%= params[:guess] %></p>
+  <p>Time Taken: <%= params[:time] %> seconds</p>
+  <p>Score: <%= @score %></p>
+  <p><%= @message %></p>
+  <%= link_to "Play Again", new_path %>
+</div>
